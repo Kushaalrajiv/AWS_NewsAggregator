@@ -1,20 +1,36 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { Amplify } from "aws-amplify";
-import { withAuthenticator } from "@aws-amplify/ui-react";
+import { Authenticator, ThemeProvider } from "@aws-amplify/ui-react"; 
 import awsExports from "./aws-exports";
 
 import Home from "./pages/Home";
-import Profile from "./pages/Profile";
 import Preferences from "./pages/Preferences";
 import Header from "./components/Header";
 import Sidebar from "./components/Sidebar";
 import NewsList from "./NewsList";
 
 import "./App.css";
-import "./Profile.css"
 
 Amplify.configure(awsExports);
+
+// Custom theme for AWS Amplify Authenticator
+const customTheme = {
+  name: "Custom Theme",
+  tokens: {
+    components: {
+      button: {
+        primary: {
+          backgroundColor: { value: "#4CAF50" }, // Green button background
+          color: { value: "#FFFFFF" }, // White button text
+        },
+      },
+      input: {
+        borderColor: { value: "#4CAF50" }, // Green border for input fields
+      },
+    },
+  },
+};
 
 const AppLayout = () => (
   <div className="app-layout">
@@ -31,28 +47,24 @@ const AppLayout = () => (
 );
 
 function App() {
-  const [isProfileComplete, setIsProfileComplete] = React.useState(false);
-
   return (
-    <Router>
-      <Routes>
-        {/* Profile route is displayed first after login */}
-        {!isProfileComplete && (
-          <Route
-            path="/profile"
-            element={<Profile onComplete={() => setIsProfileComplete(true)} />}
-          />
+    <ThemeProvider theme={customTheme}> 
+      <Authenticator>
+        {({ signOut }) => (
+          <Router>
+            <div className="auth-container">
+              <button onClick={signOut} style={{ margin: "10px", padding: "8px 16px" }}>
+                Sign Out
+              </button>
+              <Routes>
+                <Route path="/*" element={<AppLayout />} />
+              </Routes>
+            </div>
+          </Router>
         )}
-
-        {/* Main app layout after profile setup */}
-        {isProfileComplete ? (
-          <Route path="/*" element={<AppLayout />} />
-        ) : (
-          <Route path="*" element={<Navigate to="/profile" />} />
-        )}
-      </Routes>
-    </Router>
+      </Authenticator>
+    </ThemeProvider>
   );
 }
 
-export default withAuthenticator(App);
+export default App;
