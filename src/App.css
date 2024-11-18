@@ -1,38 +1,275 @@
-.App {
-  text-align: center;
+/* src/App.css */
+
+/* General Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
+/* Main Layout */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  color: #333;
+  background-color: #f4f4f9;
   min-height: 100vh;
+  overflow-y: auto; /* Ensure vertical scrolling */
+  display: block; /* Change from flex to block to allow scrolling */
+}
+
+
+/* Header */
+.app-header {
+  padding: 1rem;
+  text-align: center;
+  background-color: #007bff;
+  color: white;
+  width:auto;
+}
+
+.app-header h1 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Search Bar */
+.search-bar {
+  justify-content: center;
+  margin-top: 0.5rem;
+  margin-left: 220px;
+  position:absolute;
+  
+}
+
+.search-bar input {
+  padding: 0.5rem;
+  width: 60%;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-left: 10px;  /* Center the input */
+}
+
+.search-bar button {
+  padding: 0.5rem 1rem;
+  margin-left: 0.5rem;
+  border: none;
+  background-color: #0056b3;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.search-bar button:hover {
+  background-color: #003e8a;
+}
+
+/* Sidebar */
+.sidebar {
+  padding: 1rem;
+  background-color: #f8f9fa;
+  border-right: 1px solid #ddd;
+  position: fixed; /* Keeps sidebar fixed on the left */
+  height: 100vh;
+  margin-top: 10px;
+}
+
+.sidebar h2 {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.sidebar ul {
+  list-style: none;
+}
+
+.sidebar ul li {
+  margin-bottom: 1rem;
+}
+
+.sidebar ul li a {
+  text-decoration: none;
+  color: #007bff;
+  font-weight: bold;
+}
+
+.sidebar ul li a:hover {
+  color: #0056b3;
+}
+
+/* News Feed */
+.news-feed {
+  flex: 1;
+  padding: 1rem 2rem;
+}
+
+.news-feed h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.news-article {
+  padding: 1rem;
+  margin-bottom: 1rem;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.news-article h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+.news-article p {
+  margin-bottom: 0.5rem;
+  color: #555;
+}
+
+.news-article small {
+  font-size: 0.8rem;
+  color: #888;
+}
+
+/* Page Layouts */
+.page {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  padding: 2rem;
+}
+
+/* Profile and Preferences Styling
+.profile, .preferences {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 1.5rem;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.profile h2, .preferences h2 {
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  color: #333;
+} */
+
+
+.home-link {
+  color: #007bff;
+  text-decoration: none;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+.home-link:hover {
+  color: #0056b3;
+}
+
+.home-page {
+  margin-left: 240px; /* Keep it next to the sidebar */
+  margin-top: 90px;
+  position: relative; /* Change from fixed to relative */
+  padding-bottom: 2rem; /* Add some space for the bottom content */
+}
+
+
+/* Form Styling */
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #555;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.form-group button {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background-color: #007bff;
   color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
-.App-link {
-  color: #61dafb;
+.form-group button:hover {
+  background-color: #0056b3;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* src/pages/Preferences.css */
+
+.preferences-page {
+  max-width: 600px;
+  margin-top: 90px;
+  margin-left: 200px;
+  padding: 2rem;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  position: fixed;
 }
+
+.preferences-page h2 {
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  color: #333;
+}
+
+.topics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.topic-label {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: #fff;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.topic-label input[type="checkbox"] {
+  margin-right: 0.5rem;
+}
+
+.topic-label:hover {
+  background-color: #f0f0f0;
+}
+
+button[type="submit"] {
+  margin-top: 1.5rem;
+  padding: 0.75rem 1.5rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+button[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+

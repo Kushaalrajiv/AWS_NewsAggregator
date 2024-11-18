@@ -20,30 +20,18 @@ const NewsList = () => {
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
-        
+
         const data = await response.json();
-        console.log('Raw API response:', data); // Log raw response
-        
-        // Handle different possible response structures
-        let newsData;
-        try {
-          newsData = data.body ? 
-            (typeof data.body === 'string' ? JSON.parse(data.body) : data.body) : 
-            data;
-          console.log('Processed news data:', newsData);
-        } catch (parseError) {
-          console.error('Error parsing data:', parseError);
-          throw new Error('Failed to parse API response');
-        }
-        
+        const newsData = data.body 
+          ? (typeof data.body === 'string' ? JSON.parse(data.body) : data.body) 
+          : data;
+
         if (Array.isArray(newsData)) {
           setNews(newsData);
         } else {
-          console.error('Invalid data structure:', newsData);
           throw new Error('Invalid data format received');
         }
       } catch (error) {
-        console.error('Detailed error:', error);
         setError(error.message || 'Failed to fetch news');
       } finally {
         setLoading(false);
@@ -54,77 +42,66 @@ const NewsList = () => {
   }, []);
 
   if (loading) {
-    return (
-      <div style={{ padding: '1rem' }}>
-        <div>Loading news...</div>
-      </div>
-    );
+    return <div>Loading news...</div>;
   }
 
   if (error) {
     return (
-      <div style={{ 
-        padding: '1rem', 
-        backgroundColor: '#fee2e2', 
-        border: '1px solid #ef4444',
-        borderRadius: '0.375rem',
-        color: '#dc2626'
-      }}>
-        <h2 style={{ marginBottom: '0.5rem' }}>Error Details:</h2>
-        <p>{error}</p>
-        <p style={{ marginTop: '0.5rem', fontSize: '0.875rem' }}>
-          Please check the console for more information.
-        </p>
+      <div style={{ color: 'red', fontWeight: 'bold' }}>
+        {error}
       </div>
     );
   }
 
   return (
-    <div style={{ padding: '1rem' }}>
-      <h1 style={{ 
-        fontSize: '1.5rem', 
-        fontWeight: 'bold',
-        marginBottom: '1rem'
-      }}>
-        News Articles
-      </h1>
-      {news.length > 0 ? (
-        <ul style={{ listStyle: 'none', padding: 0 }}>
-          {news.map((article, index) => (
-            <li 
-              key={index}
-              style={{
-                padding: '1rem',
-                border: '1px solid #e5e7eb',
-                borderRadius: '0.5rem',
-                marginBottom: '1rem'
-              }}
-            >
-              <a 
-                href={article.url} 
-                target="_blank" 
-                rel="noopener noreferrer"
-                style={{
-                  color: '#2563eb',
-                  textDecoration: 'none'
-                }}
-              >
-                {article.title}
-              </a>
-              {article.description && (
-                <p style={{ 
-                  marginTop: '0.5rem',
-                  color: '#4b5563'
-                }}>
-                  {article.description}
-                </p>
-              )}
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p style={{ color: '#4b5563' }}>No news articles available.</p>
-      )}
+    <div style={{
+      display: 'grid',
+      gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+      gap: '1rem',
+      padding: '1rem'
+    }}>
+      {news.map((article, index) => (
+        <div 
+          key={index} 
+          style={{
+            padding: '1rem',
+            border: '1px solid #e5e7eb',
+            borderRadius: '0.5rem',
+            backgroundColor: '#f9fafb',
+            boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)'
+          }}
+        >
+          <a 
+            href={article.url} 
+            target="_blank" 
+            rel="noopener noreferrer"
+            style={{
+              color: '#2563eb',
+              textDecoration: 'none',
+              fontSize: '1.25rem',
+              fontWeight: 'bold'
+            }}
+          >
+            {article.title}
+          </a>
+          {article.description && (
+            <p style={{
+              marginTop: '0.5rem',
+              color: '#4b5563',
+              lineHeight: '1.5'
+            }}>
+              {article.description}
+            </p>
+          )}
+          <small style={{
+            display: 'block',
+            marginTop: '0.5rem',
+            color: '#6b7280'
+          }}>
+            Published: {new Date(article.publishedAt).toLocaleString()}
+          </small>
+        </div>
+      ))}
     </div>
   );
 };
