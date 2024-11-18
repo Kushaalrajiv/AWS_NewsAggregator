@@ -71,7 +71,7 @@ body {
   padding: 1rem;
   background-color: #f8f9fa;
   border-right: 1px solid #ddd;
-  position: fixed; /* Keeps sidebar fixed on the left */
+  position: fixed; 
   height: 100vh;
   margin-top: 10px;
 }
@@ -271,5 +271,7 @@ button[type="submit"] {
 button[type="submit"]:hover {
   background-color: #0056b3;
 }
+
+
 
 
